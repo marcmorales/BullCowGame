@@ -1,16 +1,23 @@
+#pragma once
 #include "FBullCowGame.h"
 #include <map>
 #define TMap std::map
 
+// change for Unreal language compatibility
 using int32 = int;
 using FString = std::string;
 
 FBullCowGame::FBullCowGame() { Reset(); }
 
-int32 FBullCowGame::GetMaxTries() const { return MyMaxTries; }
 int32 FBullCowGame::GetCurrentTry() const { return MyCurrentTry; }
 int32 FBullCowGame::GetHiddenWordLength() const { return MyHiddenWord.length(); }
 bool FBullCowGame::IsGameWon() const { return bGameWon; }
+
+int32 FBullCowGame::GetMaxTries() const 
+{ 
+	TMap<int, int> WordLengthToMaxTries = { {3, 4}, {4, 6}, {5, 8}, {6, 10}, {7, 12} }; // TODO keep updating value for game difficulty
+	return WordLengthToMaxTries[GetHiddenWordLength()]; 
+}
 
 EGuessStatus FBullCowGame::CheckGuessValidity(FString PlayerGuess)
 {
@@ -27,7 +34,6 @@ EGuessStatus FBullCowGame::CheckGuessValidity(FString PlayerGuess)
 		return EGuessStatus::Ok;// return Ok
 }
 
-// returns true if the PlayerGuess has 1 letter in uppercase.
 bool FBullCowGame::CheckGuessCase(FString PlayerGuess) const
 {
 	for (char c : PlayerGuess)
@@ -68,15 +74,14 @@ void FBullCowGame::Reset()
 	FString const HIDDEN_WORD = "planets";
 
 	bGameWon = false;
-	MyMaxTries = MAX_TRIES;
 	MyHiddenWord = HIDDEN_WORD;
 	MyCurrentTry = 1;
 	
 	return;
 }
 
-// recieves a valid guess, increments turn and return count
-FBullCowCount FBullCowGame::SubmitGuess(FString PlayerGuess)
+
+FBullCowCount FBullCowGame::SubmitValidGuess(FString PlayerGuess)
 {
 	MyCurrentTry++;
 	FBullCowCount BullCowCount;
