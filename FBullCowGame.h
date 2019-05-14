@@ -25,6 +25,8 @@ enum class EGuessStatus
 class FBullCowGame
 {
 public:
+	/*The way we make a constructor is to take the name of the class and make a method with that name.
+	*/
 	FBullCowGame(); // constructor
 
 	int32 GetMaxTries() const;

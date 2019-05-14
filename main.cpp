@@ -30,7 +30,6 @@ int main()
 // introduce game title and the length of the word which the player will guess
 void PrintIntro()
 {
-	// TODO add an ASCII art
 	std::cout << std::endl;
 	std::cout << "((...))          _(_~_)_\n";
 	std::cout << "( o o )   BULLS   |o o|\n";
